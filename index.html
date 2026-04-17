@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tamanna — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --accent: #c8a96e;
+    --accent2: #7c6af5;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --tag-bg: #1e1e2e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,106,245,0.12) 0%, transparent 70%);
+    top: -100px; right: -200px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+    bottom: 0; left: 10%;
+    pointer-events: none;
+  }
+
+  .hero-content { max-width: 820px; position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1.2rem; flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover { background: #d4b87e; transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  section { padding: 6rem 4rem; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  #about { background: var(--surface); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong { color: var(--text); }
+
+  .about-info { display: flex; flex-direction: column; gap: 1rem; }
+
+  .info-row {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .info-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    min-width: 100px;
+  }
+
+  .info-val { color: var(--text); font-size: 0.95rem; }
+
+  .info-val a { color: var(--accent2); text-decoration: none; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .skill-card:hover::before { transform: scaleX(1); }
+
+  .skill-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+
+  .skill-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.25rem 0.7rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  #projects { background: var(--surface); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2.2rem;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .project-card:hover { border-color: var(--accent2); transform: translateY(-5px); }
+
+  .project-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+  .project-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .project-link:hover { color: var(--accent); }
+
+  .project-corner {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .exp-item:first-child { padding-top: 0; }
+
+  .exp-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    padding-top: 0.2rem;
+  }
+
+  .exp-org { font-size: 0.82rem; color: var(--muted); margin-top: 0.3rem; }
+
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .exp-bullets { list-style: none; }
+
+  .exp-bullets li {
+    color: var(--muted);
+    font-size: 0.92rem;
+    padding: 0.3rem 0 0.3rem 1.2rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 0.8rem;
+  }
+
+  #achievements { background: var(--surface); }
+
+  .ach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .ach-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2rem;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .ach-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+  .ach-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .ach-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .ach-desc { color: var(--muted); font-size: 0.88rem; }
+
+  .ach-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-top: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  #contact { text-align: center; padding: 6rem 4rem 5rem; }
+
+  .contact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+  }
+
+  .contact-heading em { font-style: italic; color: var(--accent); }
+
+  .contact-links {
+    display: flex; justify-content: center; align-items: center;
+    gap: 2rem; flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  .contact-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.8s ease both; }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tamanna</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#softskills">Soft Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://github.com/2303A51859" target="_blank">GitHub ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">CS Student & AI/ML Enthusiast</div>
+    <h1 class="fade-up delay-1">Building the <em>Future</em><br>One Model at a Time.</h1>
+    <p class="hero-sub fade-up delay-2">Computer Science undergraduate at SR University, passionate about machine learning, intelligent systems, and building products that make technology more human.</p>
+    <div class="hero-cta fade-up delay-3">
+      <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+      <a href="https://www.linkedin.com/in/tamanna-mohammed-8463a0305" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      <a href="https://github.com/2303A51859" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+    <div class="hero-stats fade-up delay-4">
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Patent Published</div>
+      </div>
+      <div>
+        <div class="stat-num">2027</div>
+        <div class="stat-label">Graduating</div>
+      </div>
+      <div>
+        <div class="stat-num">7.3</div>
+        <div class="stat-label">CGPA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm <strong>Tamanna</strong>, a second-year Computer Science student at <strong>SR University, Warangal</strong>, Telangana. My work sits at the intersection of machine learning, web development, and human-centered design.</p>
+      <p>I completed a <strong>Google AI-ML Virtual Internship</strong> through AICTE, where I applied predictive modelling and AI-powered analytics to real-world problems. From fashion discovery platforms to AI-powered kiosk assistants, I build things that solve real problems.</p>
+      <p>I'm particularly drawn to making <strong>technology more accessible</strong> — my Kiosk Vision project demonstrates this, building a self-service assistant for visually impaired, elderly, and first-time users.</p>
+      <p>I also hold a <strong>published Indian patent</strong> on non-invasive personalized health monitoring, reflecting my drive to innovate beyond coursework.</p>
+    </div>
+    <div class="about-info">
+      <div class="info-row">
+        <span class="info-key">Location</span>
+        <span class="info-val">Warangal, Telangana, India</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">University</span>
+        <span class="info-val">SR University (B.Tech CSE, 2023–2027)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Email</span>
+        <span class="info-val"><a href="mailto:its.tamanna.cs@gmail.com">its.tamanna.cs@gmail.com</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Phone</span>
+        <span class="info-val">+91 8309891648</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">LinkedIn</span>
+        <span class="info-val"><a href="https://www.linkedin.com/in/tamanna-mohammed-8463a0305" target="_blank">tamanna-mohammed ↗</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">GitHub</span>
+        <span class="info-val"><a href="https://github.com/2303A51859" target="_blank">2303A51859 ↗</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">CGPA</span>
+        <span class="info-val">7.3 / 10</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Technical Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-title">Programming</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">C</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-title">Web Development</div>
+      <div class="skill-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">React.js</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-title">AI / ML</div>
+      <div class="skill-tags">
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">Google AI Tools</span>
+        <span class="tag">Speech Recognition</span>
+        <span class="tag">Computer Vision</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-title">Databases</div>
+      <div class="skill-tags">
+        <span class="tag">SQL Server</span>
+        <span class="tag">Oracle</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-title">Tools & Backend</div>
+      <div class="skill-tags">
+        <span class="tag">Visual Studio</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">REST API</span>
+        <span class="tag">Vite</span>
+        <span class="tag">React Router</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📚</div>
+      <div class="skill-title">Core CS</div>
+      <div class="skill-tags">
+        <span class="tag">Data Structures</span>
+        <span class="tag">Algorithms</span>
+        <span class="tag">OOP</span>
+        <span class="tag">Operating Systems</span>
+        <span class="tag">Data Mining</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-corner">👗</div>
+      <div class="project-year">2024</div>
+      <div class="project-title">Style Scape</div>
+      <p class="project-desc">A Pinterest-inspired interactive fashion discovery platform enabling users to browse curated outfit styles and emerging trends. Analysed user browsing behaviour to design layouts improving content discovery and engagement.</p>
+      <div class="project-tech">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-corner">📈</div>
+      <div class="project-year">2025</div>
+      <div class="project-title">Dynamic Pricing Agent</div>
+      <p class="project-desc">A dynamic pricing model that adjusts product prices based on demand patterns and user behaviour. Used Python and Pandas to analyse pricing-vs-demand relationships and identify optimal pricing points.</p>
+      <div class="project-tech">
+        <span class="tag">Python</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">HTML &amp; CSS</span>
+      </div>
+      <a href="https://rlpricingagent.lovable.app" target="_blank" class="project-link">Live Demo ↗</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-corner">🔤</div>
+      <div class="project-year">2024</div>
+      <div class="project-title">Morse Code Communicator</div>
+      <p class="project-desc">Designed and implemented a system using embedded electronics and programming to detect button presses and generate corresponding sounds based on Morse code — an affordable communication tool enhancing independence for visually impaired users.</p>
+      <div class="project-tech">
+        <span class="tag">Embedded Systems</span>
+        <span class="tag">Accessibility</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-corner">♿</div>
+      <div class="project-year">2026</div>
+      <div class="project-title">Kiosk Vision</div>
+      <p class="project-desc">An AI-powered accessible kiosk assistant designed to help visually impaired, hearing impaired, elderly, and first-time users interact with self-service kiosks — using voice, computer vision, and smart guidance.</p>
+      <div class="project-tech">
+        <span class="tag">React.js</span>
+        <span class="tag">Python</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">Speech Recognition</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag">REST API</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div>
+        <div class="exp-time">Apr — Jun 2024</div>
+        <div class="exp-org">Google AI-ML / AICTE<br>Virtual · Warangal, India</div>
+      </div>
+      <div>
+        <div class="exp-role">AI-ML Virtual Intern</div>
+        <ul class="exp-bullets">
+          <li>Completed a 10-week programme on advanced machine learning concepts and Google's AI tools, focusing on predictive modelling and resource optimisation.</li>
+          <li>Developed predictive models and gained proficiency in Google's AI technologies, enhancing data processing and decision-making pipelines.</li>
+          <li>Applied advanced AI methodologies in real-world projects, generating actionable insights and refining project planning strategies.</li>
+          <li>Acquired hands-on knowledge of AI-powered analytics platforms to enhance data precision and accelerate decision-making processes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Achievements</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="ach-grid">
+
+    <div class="ach-card">
+      <div class="ach-icon">🏛️</div>
+      <div class="ach-title">Indian Patent — Non-Invasive Health Monitoring</div>
+      <p class="ach-desc">Patent No. 202541096352 A — "Device for Non-Invasive Personalized Health Monitoring" co-invented with Johnson Kolluri and U. Sushmitha. Published by the Indian Patent Office, Government of India.</p>
+      <div class="ach-meta">Filed Oct 2025 · Published Nov 2025</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">🎓</div>
+      <div class="ach-title">AI Certification — IIT Roorkee</div>
+      <p class="ach-desc">Completed an Artificial Intelligence certification programme in partnership with IIT Roorkee, issued by Teach Nook.</p>
+      <div class="ach-meta">June 2024</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">🧪</div>
+      <div class="ach-title">Poster Exhibition — Jobs vs Automation</div>
+      <p class="ach-desc">Participated in a poster exhibition on "Jobs vs Automation: Is AI Replacing or Reinventing?" exploring the societal impact of artificial intelligence on employment.</p>
+      <div class="ach-meta">March 2025</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">💻</div>
+      <div class="ach-title">Mission Schrödinger's Cat Hackathon</div>
+      <p class="ach-desc">Participated in the Mission Schrödinger's Cat Hackathon organised by SRM AP, competing in a fast-paced environment to build innovative solutions under pressure.</p>
+      <div class="ach-meta">March 2026</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SOFT SKILLS -->
+<section id="softskills" style="background: var(--bg);">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Soft Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🗣️</div>
+      <div class="skill-title">Communication</div>
+      <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Strong interpersonal and written communication across technical and non-technical audiences.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧩</div>
+      <div class="skill-title">Problem Solving</div>
+      <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Analytical and critical thinking to break down complex problems and devise effective solutions.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤝</div>
+      <div class="skill-title">Teamwork</div>
+      <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Collaborative mindset with experience working in cross-functional teams on academic and hackathon projects.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔄</div>
+      <div class="skill-title">Adaptability</div>
+      <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Quick learner who thrives in dynamic, fast-paced environments and embraces change.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎯</div>
+      <div class="skill-title">Leadership</div>
+      <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Time management and initiative-taking — from filing a patent to leading project deliverables.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💡</div>
+      <div class="skill-title">Creativity & Innovation</div>
+      <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Driven to build novel solutions — from accessible kiosk tech to health monitoring patents.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-eyebrow">Get In Touch</div>
+  <h2 class="contact-heading">Let's Build<br>Something <em>Great</em>.</h2>
+  <p style="color:var(--muted); max-width:480px; margin:0 auto; font-size:1rem;">Open to internships, collaborations, and interesting problems. Drop me a message anytime.</p>
+  <div class="contact-links">
+    <a href="mailto:its.tamanna.cs@gmail.com" class="contact-link">✉ its.tamanna.cs@gmail.com</a>
+    <a href="tel:+918309891648" class="contact-link">📱 +91 8309891648</a>
+    <a href="https://www.linkedin.com/in/tamanna-mohammed-8463a0305" target="_blank" class="contact-link">🔗 LinkedIn ↗</a>
+    <a href="https://github.com/2303A51859" target="_blank" class="contact-link">🐙 GitHub ↗</a>
+  </div>
+  <div style="margin-top:3rem;">
+    <a href="mailto:its.tamanna.cs@gmail.com" class="btn btn-primary">Say Hello →</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Tamanna · CS Student at SR University</span>
+  <span>Warangal, Telangana, India</span>
+</footer>
+
+</body>
+</html>
